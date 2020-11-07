@@ -1,0 +1,11 @@
+{
+  "name": "nodeJS",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/KimJongHyuck/nodeJS.git",
+  "author": "JongHyuckKim <kasiruske@naver.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
