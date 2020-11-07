@@ -1,18 +1,15 @@
-const http = require('http');
-const fs = require('fs');
+const express = require("express");
+const { response, request } = require("express");
+const server = express();
+//const app = express();
 
-const server = http.createServer((request,response) => {
-  console.log(request.url);
-  console.log(request.method);
+server.use(express.static(__dirname + '/public'));
 
-  fs.readFile("./index.html", null, (err,data) => {
-    response.writeHead(200, {
-      "Content-Type": "text/html"
-    });
-    response.write(data);
-    response.end();
-  }) // 파일 위치, 텍스트타입, 콜백함수
+server.get('/', (req,res)=> {
+  res.status(200).sendFile(__dirname + "/1.html");
+})
 
+server.listen(3000,()=>{
+  console.log("the server is running on port 3000")
 });
 
-server.listen(3000);
