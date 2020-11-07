@@ -1,11 +1,13 @@
 {
-  "name": "nodeJS",
+  "name": "nodemon",
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/KimJongHyuck/nodeJS.git",
   "author": "JongHyuckKim <kasiruske@naver.com>",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "express-handlebars": "^5.2.0",
+    "global": "^4.4.0"
   }
 }
