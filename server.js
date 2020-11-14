@@ -40,9 +40,7 @@ const app = http.createServer(function(request,response){
     //console.log(url.parse(_url, true)); // url 정보 보기 
     if(pathname === '/') {
         if(queryData.id === undefined){
-            
             fs.readdir('./data', (err, files) => {
-                         
             let title = 'welcome';
             let description = 'Hello, Node.js';
             let list = templateList(files);
@@ -64,6 +62,25 @@ const app = http.createServer(function(request,response){
             });
         });
         }         
+    } else if(pathname === `/create`){
+      fs.readdir('./data', (err, files) => {
+        let title = 'Web - create';
+        let list = templateList(files);
+        var template = templateHTML(title, list, `
+        <form action="http://localhost:3000/process_create" method="post">
+          <p><input type="text" name="title" placeholder="title"></p>
+          <p>
+            <textarea name="description" placeholder="description"></textarea>
+          </p>
+          <p>
+            <input type="submit">
+          </p>
+        </form>
+        `);
+            response.writeHead(200);
+            response.end(template);
+        });
+      
     } else {
         response.writeHead(404);
         response.end('Not found');
