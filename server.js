@@ -1,6 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 const url = require('url');
+const qs = require('querystring');
 
 function templateHTML(title, list, body){
     return `
@@ -67,7 +68,7 @@ const app = http.createServer(function(request,response){
         let title = 'Web - create';
         let list = templateList(files);
         var template = templateHTML(title, list, `
-        <form action="http://localhost:3000/process_create" method="post">
+        <form action="http://localhost:3000/create_process" method="post">
           <p><input type="text" name="title" placeholder="title"></p>
           <p>
             <textarea name="description" placeholder="description"></textarea>
@@ -81,6 +82,20 @@ const app = http.createServer(function(request,response){
             response.end(template);
         });
       
+    } else if(pathname === `/create_process`) {
+      let body = ``;
+      request.on('data', (data)=>{
+        body += data;
+        //Too much POST data, kill the connection
+        //1e6 === 1 * math.pow(10, 6) === 1 * 1000000 ~~~ 1MB
+      //   if(body.lenght > 1e6)
+      //     request.connection.destroy();
+      });
+      request.on('end', () =>{
+        let post = qs.parse(body);
+        console.log(post.title);
+      });
+
     } else {
         response.writeHead(404);
         response.end('Not found');
