@@ -88,12 +88,14 @@ const app = http.createServer(function(request,response){
         body += data;
         //Too much POST data, kill the connection
         //1e6 === 1 * math.pow(10, 6) === 1 * 1000000 ~~~ 1MB
-      //   if(body.lenght > 1e6)
-      //     request.connection.destroy();
+        if(body.lenght > 1e6)
+         request.connection.destroy();
       });
       request.on('end', () =>{
         let post = qs.parse(body);
-        console.log(post.title);
+        let title = post.title;
+        let description = post.description;
+        
       });
 
     } else {
