@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require("fs");
 
 //동기 방식
 // console.log('A');
@@ -6,8 +6,8 @@ const fs = require('fs');
 // console.log(result);
 // console.log('C');
 
-console.log('A');               //Callback
-fs.readFile('./B.txt', 'utf8', (err,result) => {
-console.log(result);
+console.log("A"); //Callback
+fs.readFile("./B.txt", "utf8", (err, result) => {
+  console.log(result);
 });
-console.log('C');
+console.log("C");
