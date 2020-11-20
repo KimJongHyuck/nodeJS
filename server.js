@@ -3,6 +3,10 @@ const fs = require("fs");
 const url = require("url");
 const qs = require("querystring");
 
+function delCheck() {
+  console.log(`왜안됌`);
+}
+
 function templateHTML(title, list, body, control) {
   return `
     <!doctype html>
@@ -113,7 +117,9 @@ const app = http.createServer(function (request, response) {
       let title = post.title;
       let description = post.description;
       fs.writeFile(`data/${title}`, description, `utf-8`, (err) => {
-        if (err) throw err;
+        if (err) {
+          throw err;
+        }
         response.writeHead(302, { Location: `/?id=${title}` });
         response.end();
       });
@@ -172,6 +178,24 @@ const app = http.createServer(function (request, response) {
           response.writeHead(302, { Location: `/?id=${title}` });
           response.end();
         });
+      });
+    });
+  } else if (pathname === `/delete_process`) {
+    let body = ``;
+    request.on("data", (data) => {
+      body += data;
+      //Too much POST data, kill the connection
+      //1e6 === 1 * math.pow(10, 6) === 1 * 1000000 ~~~ 1MB
+      if (body.lenght > 1e6) request.connection.destroy();
+    });
+
+    request.on("end", () => {
+      let post = qs.parse(body);
+      let id = post.id;
+      fs.unlink(`data/${id}`, (err) => {
+        if (err) throw err;
+        response.writeHead(302, { Location: `/` });
+        response.end();
       });
     });
   } else {
