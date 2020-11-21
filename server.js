@@ -118,7 +118,9 @@ const app = http.createServer(function (request, response) {
         if (err) {
           throw err;
         }
-        response.writeHead(302, { Location: `/?id=${title}` });
+
+        response.writeHead(302, { Location: `/?id=${qs.escape(title)}` });
+        // response.writeHead(302, { Location: `/?id=${title}` });
         response.end();
       });
     });
@@ -173,7 +175,7 @@ const app = http.createServer(function (request, response) {
           if (err) {
             throw err;
           }
-          response.writeHead(302, { Location: `/?id=${title}` });
+          response.writeHead(302, { Location: `/?id=${qs.escape(title)}` });
           response.end();
         });
       });
